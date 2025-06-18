@@ -1,0 +1,28 @@
+.header {
+  background: red;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+}
+
+.nav {
+  background: blue;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+.container-content {
+  display: flex;
+  height: 60%;
+}
+.content {
+  background: green;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+}
+
+.footer {
+  background: orange;
+  height: 20%;
+}
