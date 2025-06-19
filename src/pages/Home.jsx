@@ -1,18 +1,11 @@
-import Header from "../components/header";
-import Content from "../components/Content";
-import Footer from "../components/Footer";
-import NavBar from "../components/Nav";
+import ContentHome from "../components/ContentHome";
+import React from "react";
 
 const Home = () => {
   return (
-    <div class="container">
-      <Header />
-      <div className="container-content">
-        <NavBar />
-        <Content />
-      </div>
-      <Footer />
-    </div>
+    <React.Fragment>
+      <ContentHome />
+    </React.Fragment>
   );
 };
 

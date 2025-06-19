@@ -1,18 +1,11 @@
-import Content from "../components/Content";
-import Footer from "../components/Footer";
-import Header from "../components/header";
-import NavBar from "../components/Nav";
+import ContentDocs from "../components/ContentDocs";
+import React from "react";
 
 const Docs = () => {
   return (
-    <div class="container">
-      <Header />
-      <div className="container-content">
-        <NavBar />
-        <Content />
-      </div>
-      <Footer />
-    </div>
+    <React.Fragment>
+      <ContentDocs />
+    </React.Fragment>
   );
 };
 
