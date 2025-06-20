@@ -1,8 +1,9 @@
 import "../styles/page1.css";
 import React from "react";
 import axios from "axios";
+import ButtonHome from "./ButtonHome";
 
-const ContentHome = () => {
+const ContentHome = ({ ha }) => {
   const [state, setState] = React.useState(false);
   const [password, setPassword] = React.useState(false);
 
@@ -21,14 +22,16 @@ const ContentHome = () => {
     setState(!state);
   };
 
-  const handlePassword = () => {
-    setPassword(!password);
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
   };
   return (
     <div className="content">
-      <h1>Content Home</h1>
+      <h1>Content Home </h1>
+
       <button onClick={handleClick}>Click</button>
       <input type="password" onChange={handlePassword} />
+      <ButtonHome teacher={ha} />
     </div>
   );
 };
