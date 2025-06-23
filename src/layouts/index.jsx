@@ -7,7 +7,7 @@ import GlobalProvider from "../contexts/globalProvider";
 const Layout = () => {
   return (
     <GlobalProvider>
-      <div class="container">
+      <div className="container">
         <Header />
         <div className="container-content">
           <NavBar />
