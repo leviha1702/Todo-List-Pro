@@ -1,6 +1,7 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import "../styles/loginForm.css";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../libs/axiosInterceptor";
 
 const Home = () => {
   const [content, setContent] = React.useState(null);
@@ -14,15 +15,13 @@ const Home = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setMessage(null);
 
     try {
-      const response = await axios.post(
-        "http://localhost:5001/api/auth/login",
-        {
-          identify: identify,
-          password: password,
-        }
-      );
+      const response = await axiosInstance.post("/auth/login", {
+        identify: identify,
+        password: password,
+      });
 
       setLoading(false);
       setContent(response.data);
@@ -52,7 +51,7 @@ const Home = () => {
             <input
               type="password"
               required
-              onChange={(e) => setPassword(e.target.vlaue)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             {Loading ? (
               <p>Đang xử lí...</p>

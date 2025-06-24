@@ -7,11 +7,15 @@ export default defineConfig(({ mode }) => {
 
   return {
     define: {
-      "process.env": {
-        VITE_API_KEY: JSON.stringify(process.env.VITE_API_KEY),
-        VITE_API_URL: JSON.stringify(process.env.VITE_API_URL),
-      },
+      "process.env.API_URL": JSON.stringify(env.API_URL),
     },
     plugins: [react()],
+
+    server: {
+      port: 9999,
+      proxy: {
+        "/api": env.API_URL,
+      },
+    },
   };
 });
