@@ -1,10 +1,13 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import GlobalProvider from "../contexts/globalProvider";
 
 const LayoutGlobal = () => {
   return (
     <React.Fragment>
-      <Outlet />
+      <GlobalProvider>
+        <Outlet />
+      </GlobalProvider>
     </React.Fragment>
   );
 };

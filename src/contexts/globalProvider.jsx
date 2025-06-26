@@ -9,7 +9,7 @@ const GlobalProvider = ({ children }) => {
   });
   GlobalContext.displayName = "StudentContext";
 
-  const data = { state };
+  const data = { state, setState };
 
   return (
     <GlobalContext.Provider value={data}>{children}</GlobalContext.Provider>
