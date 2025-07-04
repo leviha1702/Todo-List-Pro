@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { GlobalContext } from "../../contexts/globalProvider";
-import Loading from "../../components/loading/Loading";
+import Loading from "../../components/loading/loading";
 const Home = () => {
   const { state, setState } = React.useContext(GlobalContext);
   const [todos, setTodos] = React.useState([]);
