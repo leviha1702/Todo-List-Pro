@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "../../../styles/auth/register.css"; // Adjust the path as necessary
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   showErrorToast,
   showSuccessToast,
 } from "../../../utils/toastNotifications.js"; // Ensure you have react-toastify installed
 import Loading from "../../../components/loading/loading.jsx";
+import { isValidEmail } from "../../../utils/checkInput.js";
+import axiosInstance from "../../../libs/axiosInterceptor.jsx";
 
 const Register = () => {
   const [email, setEmail] = React.useState("");
@@ -14,6 +16,8 @@ const Register = () => {
   const [loading, setLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+  const navigate = useNavigate();
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -27,14 +31,32 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
 
-    //Check password
+    if (!isValidEmail(email)) {
+      setLoading(false);
+      return showErrorToast("Invalid email!");
+    }
     if (password !== confirmPassword) {
+      //Check password
       setLoading(false);
       return showErrorToast("Password and confirm password do not match");
     }
-    setLoading(false);
 
-    return showSuccessToast("Logged in successfully!");
+    axiosInstance
+      .post("/auth/register", {
+        email,
+        password,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          setLoading(false);
+          navigate("/auth/login");
+          return showSuccessToast("Account created successfully!");
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        return showErrorToast(error.response.data.message);
+      });
   };
   return (
     <React.Fragment>
@@ -46,7 +68,7 @@ const Register = () => {
               <div className="form-group">
                 <i className="fas fa-envelope icon" />
                 <input
-                  type="email"
+                  type="text"
                   id="email"
                   name="email"
                   placeholder="Enter your email"
@@ -55,7 +77,13 @@ const Register = () => {
                 />
               </div>
               <div className="form-group">
-                <i className="fas fa-lock icon" onClick={handleShowPassword} />
+                <div onClick={handleShowPassword}>
+                  {showPassword ? (
+                    <i className="fas fa-unlock icon" />
+                  ) : (
+                    <i className="fa-solid fa-lock icon"></i>
+                  )}
+                </div>
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
@@ -66,10 +94,13 @@ const Register = () => {
                 />
               </div>
               <div className="form-group">
-                <i
-                  className="fas fa-lock icon"
-                  onClick={handleShowConfirmPassword}
-                />
+                <div onClick={handleShowConfirmPassword}>
+                  {showConfirmPassword ? (
+                    <i className="fas fa-unlock icon" />
+                  ) : (
+                    <i className="fa-solid fa-lock icon"></i>
+                  )}
+                </div>
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   id="confirm-password"
