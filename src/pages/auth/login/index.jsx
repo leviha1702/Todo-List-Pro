@@ -55,7 +55,7 @@ const Login = () => {
             <h2>Welcome Back</h2>
             <p>Login to your account</p>
             <form onSubmit={handleSignIn}>
-              <div className="form-group">
+              <div className="input-group">
                 <i className="fas fa-envelope icon" />
                 <input
                   type="text"
@@ -66,7 +66,7 @@ const Login = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="form-group">
+              <div className="input-group">
                 <div onClick={handleShowPassword}>
                   {showPassword ? (
                     <i className="fas fa-unlock icon" />
