@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast, Bounce } from "react-toastify";
 
 const toastOptions = {
   position: "top-right",
@@ -10,7 +10,7 @@ const toastOptions = {
   draggable: true,
   pauseOnHover: true,
   theme: "light",
-  transition: "Bounce",
+  transition: Bounce,
 };
 
 export const showSuccessToast = (message) => {

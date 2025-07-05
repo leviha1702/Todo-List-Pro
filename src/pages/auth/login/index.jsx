@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../../styles/auth/login.css"; // Assuming you have a CSS file for styling
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../libs/axiosInterceptor";
@@ -8,12 +8,14 @@ import {
 } from "../../../utils/toastNotifications";
 import { isValidEmail } from "../../../utils/checkInput";
 import Loading from "../../../components/loading/loading";
+import { saveToLocalStorage } from "../../../utils/localStorage";
 
 const Login = () => {
-  const [email, setEmail] = React.useState("");
+  const [identify, setIdentify] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const focusRef = React.useRef(null);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -25,21 +27,18 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (!isValidEmail(email)) {
-      setLoading(false);
-      return showErrorToast("Invalid email!");
-    }
-
     axiosInstance
       .post("/auth/login", {
-        identify: email,
+        identify,
         password,
       })
       .then((response) => {
         if (response.status === 200) {
           setLoading(false);
+          saveToLocalStorage("accessToken", response.data.accessToken);
           navigate("/");
-          return showSuccessToast("Login created successfully!");
+
+          return showSuccessToast("Login successfully!");
         }
       })
       .catch((error) => {
@@ -47,6 +46,10 @@ const Login = () => {
         return showErrorToast(error.response.data.message);
       });
   };
+
+  React.useEffect(() => {
+    focusRef.current.focus();
+  }, []);
   return (
     <React.Fragment>
       <div className="auth">
@@ -56,14 +59,15 @@ const Login = () => {
             <p>Login to your account</p>
             <form onSubmit={handleSignIn}>
               <div className="input-group">
-                <i className="fas fa-envelope icon" />
+                <i className="fa fa-user icon" />
                 <input
                   type="text"
                   id="email"
                   name="email"
-                  placeholder="Enter your email"
+                  placeholder="Enter your email or username"
                   required
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setIdentify(e.target.value)}
+                  ref={focusRef}
                 />
               </div>
               <div className="input-group">
