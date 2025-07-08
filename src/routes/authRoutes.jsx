@@ -1,3 +1,4 @@
+import WithPublic from "../guards/withPublic";
 import LayoutAuth from "../layouts/layoutAuth";
 const Login = lazyLoader(() => import("../pages/auth/login"), 0);
 const Register = lazyLoader(() => import("../pages/auth/register"), 0);
@@ -6,7 +7,11 @@ import lazyLoader from "./lazyLoader";
 
 const authRoutes = {
   path: "auth",
-  element: <LayoutAuth />,
+  element: (
+    <WithPublic>
+      <LayoutAuth />
+    </WithPublic>
+  ),
   children: [
     {
       path: "login",

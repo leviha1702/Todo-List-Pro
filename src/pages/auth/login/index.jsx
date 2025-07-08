@@ -9,6 +9,7 @@ import {
 import { isValidEmail } from "../../../utils/checkInput";
 import Loading from "../../../components/loading/loading";
 import { saveToLocalStorage } from "../../../utils/localStorage";
+import { keyLocalStorage } from "../../../constants/keyConstant";
 
 const Login = () => {
   const [identify, setIdentify] = React.useState("");
@@ -35,7 +36,10 @@ const Login = () => {
       .then((response) => {
         if (response.status === 200) {
           setLoading(false);
-          saveToLocalStorage("accessToken", response.data.accessToken);
+          saveToLocalStorage(
+            keyLocalStorage.accessToken,
+            response.data.accessToken
+          );
           navigate("/");
 
           return showSuccessToast("Login successfully!");
