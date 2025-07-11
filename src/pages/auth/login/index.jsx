@@ -58,7 +58,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <SEO
-        title="Signup"
+        title="Sign Up"
         description="Welcome to page login website of Class 02"
       />
       <div className="auth">

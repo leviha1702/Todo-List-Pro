@@ -61,7 +61,7 @@ const Register = () => {
   };
   return (
     <React.Fragment>
-      <SEO title="Signin" description="Welcome to page register of Class 02" />
+      <SEO title="Sign In" description="Welcome to page register of Class 02" />
       <div className="auth">
         <div className="register-container">
           <div className="register-box">
