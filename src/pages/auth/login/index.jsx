@@ -10,6 +10,7 @@ import { isValidEmail } from "../../../utils/checkInput";
 import Loading from "../../../components/loading/loading";
 import { saveToLocalStorage } from "../../../utils/localStorage";
 import { keyLocalStorage } from "../../../constants/keyConstant";
+import SEO from "../../../components/seo/seo";
 
 const Login = () => {
   const [identify, setIdentify] = React.useState("");
@@ -56,6 +57,10 @@ const Login = () => {
   }, []);
   return (
     <React.Fragment>
+      <SEO
+        title="Signup"
+        description="Welcome to page login website of Class 02"
+      />
       <div className="auth">
         <div className="login-container">
           <div className="login-box">

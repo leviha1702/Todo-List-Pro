@@ -8,6 +8,7 @@ import {
 import Loading from "../../../components/loading/loading.jsx";
 import { isValidEmail } from "../../../utils/checkInput.js";
 import axiosInstance from "../../../libs/axiosInterceptor.jsx";
+import SEO from "../../../components/seo/seo.jsx";
 
 const Register = () => {
   const [email, setEmail] = React.useState("");
@@ -60,6 +61,7 @@ const Register = () => {
   };
   return (
     <React.Fragment>
+      <SEO title="Signin" description="Welcome to page register of Class 02" />
       <div className="auth">
         <div className="register-container">
           <div className="register-box">

@@ -8,6 +8,7 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../utils/toastNotifications";
+import SEO from "../../../components/seo/seo";
 
 const ForgetPassword = () => {
   const [email, setEmail] = React.useState("");
@@ -43,6 +44,7 @@ const ForgetPassword = () => {
 
   return (
     <React.Fragment>
+      <SEO title="Forget" description="Welcome to page forget of Class 02" />
       <div className="auth">
         <div className="forget-container">
           <div className="forget-box">

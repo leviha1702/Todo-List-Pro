@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import GlobalProvider from "../contexts/globalProvider";
 import { ToastContainer } from "react-toastify";
+import { HelmetProvider } from "react-helmet-async";
 const LayoutGlobal = () => {
   return (
     <React.Fragment>
@@ -9,9 +10,11 @@ const LayoutGlobal = () => {
       <ToastContainer />
 
       {/* Global Provider */}
-      <GlobalProvider>
-        <Outlet />
-      </GlobalProvider>
+      <HelmetProvider>
+        <GlobalProvider>
+          <Outlet />
+        </GlobalProvider>
+      </HelmetProvider>
     </React.Fragment>
   );
 };
