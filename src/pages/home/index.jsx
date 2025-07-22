@@ -1,26 +1,38 @@
-import axios from "axios";
 import React from "react";
 import { GlobalContext } from "../../contexts/globalProvider";
 import Loading from "../../components/loading/loading";
 import SEO from "../../components/seo/seo";
+import { getFromLocalStorage } from "../../utils/localStorage";
+import { keyLocalStorage } from "../../constants/keyConstant";
+import axiosInstance from "../../libs/axiosInterceptor";
 const Home = () => {
   const { state, setState } = React.useContext(GlobalContext);
   const [todos, setTodos] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [user, setUser] = React.useState(null);
 
   React.useEffect(() => {
-    setTimeout(() => {
-      axios
-        .get("https://jsonplaceholder.typicode.com/todos")
+    setLoading(true);
+    const token = getFromLocalStorage(keyLocalStorage.accessToken);
+    if (token) {
+      axiosInstance
+        .get("/users/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           setLoading(false);
-          setTodos(response.data);
+          if (response.status === 200) {
+            setUser(response.data.user);
+          }
         })
         .catch((error) => {
           setLoading(false);
+          console.error("Error fetching user profile:", error);
         });
-    }, 2000);
-  }, []);
+    }
+  });
 
   return (
     <React.Fragment>
@@ -34,12 +46,23 @@ const Home = () => {
         <ul>
           {loading ? (
             <Loading />
+          ) : user ? (
+            <li>
+              <p>
+                <b>UserId:</b>
+                {user.id}
+              </p>
+              <p>
+                <b>Email:</b>
+                {user.email}
+              </p>
+              <p>
+                <b>Username:</b>
+                {user.username}
+              </p>
+            </li>
           ) : (
-            todos.map((todo) => (
-              <li key={todo.id}>
-                {todo.title} - {todo.completed ? "Completed" : "Pending"}
-              </li>
-            ))
+            <li>No user Found</li>
           )}
         </ul>
       </div>
