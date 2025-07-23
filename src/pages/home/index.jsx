@@ -32,7 +32,7 @@ const Home = () => {
           console.error("Error fetching user profile:", error);
         });
     }
-  });
+  }, []);
 
   return (
     <React.Fragment>
