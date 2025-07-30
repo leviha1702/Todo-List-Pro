@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../../../styles/auth/login.css"; // Assuming you have a CSS file for styling
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../libs/axiosInterceptor";
@@ -6,11 +6,13 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../utils/toastNotifications";
-import { isValidEmail } from "../../../utils/checkInput";
 import Loading from "../../../components/loading/loading";
 import { saveToLocalStorage } from "../../../utils/localStorage";
 import { keyLocalStorage } from "../../../constants/keyConstant";
 import SEO from "../../../components/seo/seo";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleClientId } from "../../../configs/googleConfig";
+import LoginGoogle from "../../../components/auth/loginGoogle";
 
 const Login = () => {
   const [identify, setIdentify] = React.useState("");
@@ -114,9 +116,10 @@ const Login = () => {
             <div className="social-login">
               <p>Or login with</p>
               <div className="social-icons">
-                <button className="google-btn">
-                  <i className="fab fa-google" /> Google
-                </button>
+                <GoogleOAuthProvider clientId={GoogleClientId}>
+                  <LoginGoogle />
+                </GoogleOAuthProvider>
+
                 <button className="facebook-btn">
                   <i className="fab fa-facebook-f" /> Facebook
                 </button>
