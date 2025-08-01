@@ -5,13 +5,16 @@ import SEO from "../../components/seo/seo";
 import { getFromLocalStorage } from "../../utils/localStorage";
 import { keyLocalStorage } from "../../constants/keyConstant";
 import axiosInstance from "../../libs/axiosInterceptor";
-import { PiNetWorkContext } from "../../contexts/pinetworkProviders";
+import { decrement, increment, reset } from "../../redux/actions/counterAction";
+import { useDispatch, useSelector } from "react-redux";
 const Home = () => {
   const { state, setState } = React.useContext(GlobalContext);
   const [todos, setTodos] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
-  const { state: stateReducer, dispatch } = React.useContext(PiNetWorkContext);
+  const count = useSelector((state) => state.counter.count);
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     setLoading(true);
@@ -70,19 +73,25 @@ const Home = () => {
       </div>
       <h1>
         Pi:
-        <span style={{ color: "red" }}>{stateReducer.count}</span>
+        <span style={{ color: "red" }}>{count}</span>
       </h1>
       <button
-        style={{ width: "100px", hight: "50px" }}
-        onClick={() => dispatch({ type: "INCREMENT" })}
+        style={{ width: "100px", height: "50px" }}
+        onClick={() => dispatch(increment())}
       >
         Increment
       </button>
       <button
-        style={{ width: "100px", hight: "50px" }}
-        onClick={() => dispatch({ type: "DECREMENT" })}
+        style={{ width: "100px", height: "50px" }}
+        onClick={() => dispatch(decrement())}
       >
         Decrement
+      </button>
+      <button
+        style={{ width: "100px", height: "50px" }}
+        onClick={() => dispatch(reset())}
+      >
+        Reset
       </button>
     </React.Fragment>
   );
