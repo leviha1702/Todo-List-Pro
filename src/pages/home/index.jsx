@@ -5,11 +5,13 @@ import SEO from "../../components/seo/seo";
 import { getFromLocalStorage } from "../../utils/localStorage";
 import { keyLocalStorage } from "../../constants/keyConstant";
 import axiosInstance from "../../libs/axiosInterceptor";
+import { PiNetWorkContext } from "../../contexts/pinetworkProviders";
 const Home = () => {
   const { state, setState } = React.useContext(GlobalContext);
   const [todos, setTodos] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
+  const { state: stateReducer, dispatch } = React.useContext(PiNetWorkContext);
 
   React.useEffect(() => {
     setLoading(true);
@@ -66,6 +68,22 @@ const Home = () => {
           )}
         </ul>
       </div>
+      <h1>
+        Pi:
+        <span style={{ color: "red" }}>{stateReducer.count}</span>
+      </h1>
+      <button
+        style={{ width: "100px", hight: "50px" }}
+        onClick={() => dispatch({ type: "INCREMENT" })}
+      >
+        Increment
+      </button>
+      <button
+        style={{ width: "100px", hight: "50px" }}
+        onClick={() => dispatch({ type: "DECREMENT" })}
+      >
+        Decrement
+      </button>
     </React.Fragment>
   );
 };

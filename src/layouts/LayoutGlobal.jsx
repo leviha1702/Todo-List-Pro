@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import GlobalProvider from "../contexts/globalProvider";
 import { ToastContainer } from "react-toastify";
 import { HelmetProvider } from "react-helmet-async";
+import PiNetWorkProvider from "../contexts/piNetWorkProviders";
 const LayoutGlobal = () => {
   return (
     <React.Fragment>
@@ -12,7 +13,9 @@ const LayoutGlobal = () => {
       {/* Global Provider */}
       <HelmetProvider>
         <GlobalProvider>
-          <Outlet />
+          <PiNetWorkProvider>
+            <Outlet />
+          </PiNetWorkProvider>
         </GlobalProvider>
       </HelmetProvider>
     </React.Fragment>
