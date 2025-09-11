@@ -77,7 +77,7 @@ const Home = () => {
       </h1>
       <button
         style={{ width: "100px", height: "50px" }}
-        onClick={() => dispatch(increment())}
+        onClick={() => dispatch(increment({ count: 5 }))}
       >
         Increment
       </button>
