@@ -13,46 +13,35 @@ import SEO from "../../../components/seo/seo";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleClientId } from "../../../configs/googleConfig";
 import LoginGoogle from "../../../components/auth/loginGoogle";
+import { loginInitiate } from "../../../redux/actions/authAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const [identify, setIdentify] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const focusRef = React.useRef(null);
-
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+  const { isLoading, accessToken } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSignIn = (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    axiosInstance
-      .post("/auth/login", {
-        identify,
-        password,
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          setLoading(false);
-          saveToLocalStorage(
-            keyLocalStorage.accessToken,
-            response.data.accessToken
-          );
-          navigate("/");
-
-          return showSuccessToast("Login successfully!");
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        return showErrorToast(error.response.data.message);
-      });
+    if (!identify || !password) {
+      return showErrorToast("Please fill all fields");
+    }
+    dispatch(loginInitiate(identify, password));
   };
+
+  React.useEffect(() => {
+    if (accessToken) {
+      navigate("/");
+    }
+  }, [accessToken]);
 
   React.useEffect(() => {
     focusRef.current.focus();
@@ -105,7 +94,7 @@ const Login = () => {
                   Forgot Password?
                 </Link>
               </div>
-              {loading ? (
+              {isLoading ? (
                 <Loading />
               ) : (
                 <button type="submit" className="login-btn">
