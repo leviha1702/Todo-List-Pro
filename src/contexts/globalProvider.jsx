@@ -1,13 +1,13 @@
 import React from "react";
 
 export const GlobalContext = React.createContext();
+GlobalContext.displayName = "StudentContext";
 
 const GlobalProvider = ({ children }) => {
   const [state, setState] = React.useState({
     name: "John Doe",
     email: "levietha@gmail.com",
   });
-  GlobalContext.displayName = "StudentContext";
 
   const data = { state, setState };
 

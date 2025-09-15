@@ -15,6 +15,7 @@ import { GoogleClientId } from "../../../configs/googleConfig";
 import LoginGoogle from "../../../components/auth/loginGoogle";
 import { loginInitiate } from "../../../redux/actions/authAction";
 import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoading } from "../../../redux/selectors/authSelector";
 
 const Login = () => {
   const [identify, setIdentify] = React.useState("");
@@ -24,7 +25,7 @@ const Login = () => {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  const { isLoading, accessToken } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector(selectIsLoading);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,11 +38,11 @@ const Login = () => {
     dispatch(loginInitiate(identify, password));
   };
 
-  React.useEffect(() => {
-    if (accessToken) {
-      navigate("/");
-    }
-  }, [accessToken]);
+  // React.useEffect(() => {
+  //   if (accessToken) {
+  //     navigate("/", { replace: true });
+  //   }
+  // }, [accessToken, navigate]);
 
   React.useEffect(() => {
     focusRef.current.focus();

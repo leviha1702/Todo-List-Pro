@@ -1,30 +1,20 @@
-import WithAuthGuard from "../guards/withAuthGuard";
 import LayoutAuth from "../layouts/LayoutAuth";
-const Login = lazyLoader(() => import("../pages/auth/login"), 0);
-const Register = lazyLoader(() => import("../pages/auth/register"), 0);
-const ForgetPassword = lazyLoader(() => import("../pages/auth/forget"), 0);
-import lazyLoader from "./lazyLoader";
+import Login from "../pages/auth/login";
+import Register from "../pages/auth/register";
+import ForgetPassword from "../pages/auth/forget";
+import WithAuthGuard from "../guards/withAuthGuard";
 
 const authRoutes = {
   path: "auth",
   element: (
-    <WithAuthGuard>
-      <LayoutAuth />
-    </WithAuthGuard>
+    <LayoutAuth>
+      <WithAuthGuard />
+    </LayoutAuth>
   ),
   children: [
-    {
-      path: "login",
-      element: <Login />,
-    },
-    {
-      path: "register",
-      element: <Register />,
-    },
-    {
-      path: "forget",
-      element: <ForgetPassword />,
-    },
+    { path: "login", element: <Login /> },
+    { path: "register", element: <Register /> },
+    { path: "forget", element: <ForgetPassword /> },
   ],
 };
 

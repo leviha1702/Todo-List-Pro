@@ -1,13 +1,11 @@
-import { Navigate } from "react-router-dom";
+// guards/withAuthGuard.jsx
+import { Navigate, Outlet } from "react-router-dom";
 import { getFromLocalStorage } from "../utils/localStorage";
 import { keyLocalStorage } from "../constants/keyConstant";
 
-const WithAuthGuard = ({ children }) => {
+const WithAuthGuard = () => {
   const accessToken = getFromLocalStorage(keyLocalStorage.accessToken);
-  if (accessToken) {
-    return <Navigate to="/" />;
-  }
-  return children;
+  return accessToken ? <Navigate to="/" replace /> : <Outlet />;
 };
 
 export default WithAuthGuard;
