@@ -9,12 +9,19 @@ import Loading from "../../../components/loading/loading.jsx";
 import { isValidEmail } from "../../../utils/checkInput.js";
 import axiosInstance from "../../../libs/axiosInterceptor.jsx";
 import SEO from "../../../components/seo/seo.jsx";
+import { useSelector } from "react-redux";
+import {
+  selectFlag,
+  selectIsLoading,
+} from "../../../redux/selectors/authSelector.js";
+import { registerInitiate } from "../../../redux/actions/authAction.js";
 
 const Register = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
+  const isLoading = useSelector(selectIsLoading);
+  const isFlag = useSelector(selectFlag);
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
@@ -30,15 +37,12 @@ const Register = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    setLoading(true);
 
     if (!isValidEmail(email)) {
-      setLoading(false);
       return showErrorToast("Invalid email!");
     }
     if (password !== confirmPassword) {
       //Check password
-      setLoading(false);
       return showErrorToast("Password and confirm password do not match");
     }
 
@@ -49,15 +53,14 @@ const Register = () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          setLoading(false);
           navigate("/auth/login");
           return showSuccessToast("Account created successfully!");
         }
       })
       .catch((error) => {
-        setLoading(false);
         return showErrorToast(error.response.data.message);
       });
+    dispatch(registerInitiate(email, password));
   };
   return (
     <React.Fragment>
@@ -112,7 +115,7 @@ const Register = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
-              {loading ? (
+              {isLoading ? (
                 <Loading />
               ) : (
                 <button type="submit" className="register-btn">

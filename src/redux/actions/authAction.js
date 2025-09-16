@@ -13,6 +13,9 @@ import {
   LOGIN_PENDING,
   LOGIN_REJECTED,
   LOGIN_SUCCESS,
+  REGISTER_PENDING,
+  REGISTER_REJECTED,
+  REGISTER_SUCCESS,
   RESET_AUTH_STATE,
 } from "./types/authType";
 
@@ -50,5 +53,20 @@ export const forgetPasswordInitiate = (email) =>
     FORGET_PASSWORD_REJECTED,
     (data) => {
       showSuccessToast("Please, new password sent to your email!");
+    }
+  );
+
+export const registerInitiate = (email, password) =>
+  handleAsyncAction(
+    () =>
+      axiosInstance.post("/auth/register", {
+        email,
+        password,
+      }),
+    REGISTER_PENDING,
+    REGISTER_SUCCESS,
+    REGISTER_REJECTED,
+    (_) => {
+      showSuccessToast("Account created successfully!");
     }
   );
