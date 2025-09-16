@@ -14,7 +14,10 @@ import {
   selectFlag,
   selectIsLoading,
 } from "../../../redux/selectors/authSelector.js";
-import { registerInitiate } from "../../../redux/actions/authAction.js";
+import {
+  registerInitiate,
+  resetAuthState,
+} from "../../../redux/actions/authAction.js";
 
 const Register = () => {
   const [email, setEmail] = React.useState("");
@@ -62,6 +65,14 @@ const Register = () => {
       });
     dispatch(registerInitiate(email, password));
   };
+
+  React.useEffect(() => {
+    if (isFlag) {
+      navigate("/auth/login");
+    }
+    return () => resetAuthState();
+  }, [isFlag]);
+
   return (
     <React.Fragment>
       <SEO title="Sign In" description="Welcome to page register of Class 02" />
